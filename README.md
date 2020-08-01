@@ -50,7 +50,7 @@ let someSwiftCodeInFile9: String = "Hello world from file 9!"
 
 # Tutorial Video
 
-
+[![Tutorial Video](https://img.youtube.com/vi/ZmCZxaPDbXQ/0.jpg)](https://www.youtube.com/watch?v=ZmCZxaPDbXQ)
 
 # Example run script for an XCode build phase
 
