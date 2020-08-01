@@ -1259,14 +1259,20 @@ def main():
     sys.path = ['.'] + sys.path
 
     fullFile = execute_template(ast, args.line_directive, **bindings)
-    file_bodies = re.split(r'\/\/ new gyb file [a-zA-Z\._-]+', fullFile)
-    file_names = re.findall(r'\/\/ new gyb file ([a-zA-Z\._-]+)', fullFile)
+    file_bodies = re.split(r'\n*[ \t]*\/\/ new gyb file [0-9a-zA-Z\._-]+[ \t]*\n*', fullFile)
+    file_names = re.findall(r'\n*[ \t]*\/\/ new gyb file ([0-9a-zA-Z\._-]+)[ \t]*\n*', fullFile)
     
     os.chdir(oldDirectory)
     targetAbsFilePath = os.path.abspath(args.target)
     basePath, firstFileName = os.path.split(targetAbsFilePath)
     def prependBasePath(filename): 
         return basePath + "/" + firstFileName.rpartition('.swift')[0] + "/" + filename
+
+    # create directory if it doesn't exist
+    if len(file_names) > 1:
+        subDir = oldDirectory + "/" + firstFileName.rpartition('.swift')[0]
+        if not os.path.exists(subDir):
+            os.mkdir(subDir)
 
     file_names = map(prependBasePath, file_names) 
     file_names.insert(0, targetAbsFilePath)
@@ -1280,9 +1286,6 @@ def main():
     while i < len(file_names):
         write(file_names[i], file_bodies[i])
         i += 1
-
-    # print(file_names)
-    # args.target.write("// "+ str(len(file_breaks))+ "  " + str(args.target)  +  "// hello lol \n" + fullFile)
 
 
 if __name__ == '__main__':

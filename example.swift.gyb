@@ -1,0 +1,11 @@
+// main example.swift file 🎉
+let someSwiftCodeInBaseExport: String = "Hello world from the main file!"
+
+% # create 9 files in the directory "example"
+% for i in range (1, 10):
+
+// new gyb file file${i}.swift
+// Welcome to file ${i}! 🎊
+let someSwiftCodeInFile${i}: String = "Hello world from file ${i}!"
+
+% end
